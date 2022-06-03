@@ -115,7 +115,7 @@ class EmployeeController extends Controller
             'city_address' => 'nullable',
         ]);
 
-        $empExist = Employee::findOrFail($id)->first();
+        $empExist = Employee::findOrFail($id);
         // dd($request->file('ktp_files'));
         $requestData = $request->all();
         if ($request->hasFile('ktp_files')) {
@@ -153,8 +153,8 @@ class EmployeeController extends Controller
     {
         $emps = Employee::findOrFail($request->id);
         $res['status'] = true;
-        $res['data'] = $emps->first();
-        $res['data']['city_name'] = $emps->getCity->name;
+        $res['data'] = $emps;
+        $res['data']['city_name'] = $emps->getCity->name ?? null;
         if (!$res['data']) {
             $res = [
                 'status' => false,

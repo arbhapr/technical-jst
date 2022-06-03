@@ -563,6 +563,8 @@
 
         $(".btn-edit").on('click', function () {
             let id = $(this).data('id');
+            console.log(id);
+            $("#cityFieldEdit option").remove();
             $.ajax({
                 url: baseUrl + "/employees/jsonProvinces",
                 type: 'GET',
@@ -601,8 +603,14 @@
                         $("#bankAccountNumberFieldEdit").val(dt.bank_account_number);
                         $("#zipCodeFieldEdit").val(dt.zip_code);
                         $("#streetAddressFieldEdit").val(dt.street_address);
-                        $("#cityFieldEdit").append("<option value='" + dt.city_address +
-                            "' selected>" + dt.city_name + "</option>");
+                        if (dt.city_address != null) {
+                            $("#cityFieldEdit").append("<option value='" + dt.city_address +
+                                "' selected>" + dt.city_name + "</option>");
+                        } else {
+                            $("#cityFieldEdit").append(
+                                "<option value='' disabled selected>Select City</option>"
+                            );
+                        }
                     }
                 }
             });
